@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+{%  for nameserver in resolv_conf.nameservers|default([],true) %}
+nameserver {{ nameserver }}
+{% endfor %}
+{% if resolv_conf.domain|default(undef,true) is defined %}
+domain {{ resolv_conf.domain }}
+{% endif %}
+{% if resolv_conf.search|default([],true)|length > 0 %}
+search {{ resolv_conf.search | join(' ') }}
+{% endif %}
+{% if resolv_conf.sortlist|default([],true)|length > 0 %}
+sortlist {{ resolv_conf.sortlist | join(' ') }}
+{% endif %}
+{% if resolv_conf.options|default([],true)|length > 0 %}
+options {{ resolv_conf.options | join(' ') }}
+{% endif %}
