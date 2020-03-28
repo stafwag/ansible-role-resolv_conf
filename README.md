@@ -41,20 +41,43 @@ None
 Set the nameserver to the default 9.9.9.9.
 
 ```
-```
-
-```
-- name: configure ntp on the systems
+---
+- name: setup /etc/resolv.conf
   hosts: all
   become: true
-  vars:
-    ntp_servers:
-      - 0.europe.pool.ntp.org
-      - 1.europe.pool.ntp.org
-      - 2.europe.pool.ntp.org
-      - 3.europe.pool.ntp.org
   roles:
-    - stafwag.ntpd
+    - role: stafwag.resolv_conf
+```
+
+### Empty /etc/resolv.conf
+
+```
+---
+- name: setup /etc/resolv.conf
+  hosts: all
+  become: true
+  roles:
+    - role: stafwag.resolv_conf
+      resolv_conf:
+```
+
+### Configure /etc/resolv.conf
+
+```
+---
+- name: setup /etc/resolv.conf
+  hosts: all
+  become: true
+  roles:
+    - role: stafwag.resolv_conf
+      resolv_conf:
+        nameservers:
+          - 10.10.10.10
+        domain:
+          intern.stafnet.local
+        search:
+          - intern.stafnet.local
+          - dmz.stafnet.local
 ```
 
 ## License
